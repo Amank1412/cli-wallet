@@ -48,7 +48,7 @@ fn save_wallet(name: &str, secret: &SecretKey, pubkey: &PublicKey) {
 
     fs::create_dir_all("wallets").unwrap();
     fs::write(wallet_path(name), serde_json::to_string_pretty(&wf).unwrap()).unwrap();
-    println!("✅ Wallet '{}' created", name);
+    println!(" Wallet '{}' created", name);
 }
 
 /// Load wallet from file
@@ -69,12 +69,12 @@ fn main() {
 
         Commands::Show { name } => {
             let wallet = load_wallet(&name);
-            println!("🔑 Address (Public Key): {}", wallet.public);
+            println!("Address (Public Key): {}", wallet.public);
         }
 
         Commands::List => {
             if let Ok(entries) = fs::read_dir("wallets") {
-                println!("📂 Wallets:");
+                println!("Wallets:");
                 for e in entries {
                     if let Ok(e) = e {
                         println!("- {}", e.path().file_stem().unwrap().to_string_lossy());
@@ -95,7 +95,7 @@ fn main() {
             let msg = Message::from_slice(&hash).unwrap();
 
             let sig = secp.sign_ecdsa(&msg, &secret);
-            println!("✍️ Signature: {}", hex::encode(sig.serialize_compact()));
+            println!("Signature: {}", hex::encode(sig.serialize_compact()));
         }
     }
 }
